@@ -1,0 +1,26 @@
+curl -X POST -H "Content-Type: application/json" -d '{\"name\": \"Stina\",\"balance\" :5000}' http://localhost:8080/account/create
+
+
+curl -X POST http://localhost:8080/account/create?name=Stina&balance=5000
+
+
+    @Bean
+    public Config hazelcastConfig() {
+        return new Config().setManagementCenterConfig(); // TODO
+    }
+
+    @Bean
+    public HazelcastInstance hazelcastInstance(Config hazelcastConfig) {
+        return Hazelcast.newHazelcastInstance(hazelcastConfig);
+    }
+
+    @Bean
+    public Map<Integer, AccountDetails> accountMap(HazelcastInstance hazelcastInstance) {
+        return hazelcastInstance.getMap("accountMap");
+    }
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast</artifactId>
+                <version>5.1.4</version>
+            </dependency>
+    
