@@ -1,5 +1,6 @@
 package src.account;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AccountService {
 
     @Autowired
@@ -16,11 +18,12 @@ public class AccountService {
         return accountRepository.findById(accountId);
     }
 
-    public int createAccount(String name, int balance) {
-        return accountRepository.save(new AccountDetails(name, balance)).getAccountId();
+    public AccountDetails createAccount(String name, BigDecimal balance) {
+        AccountDetails newCustomer = new AccountDetails(name, balance);
+        return accountRepository.save(newCustomer);
     }
 
-    public void reduceBalance(BigDecimal reduction) {
-
+    public AccountDetails updateAccount(AccountDetails accountDetails) {
+        return accountRepository.save(accountDetails);
     }
 }

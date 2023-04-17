@@ -1,33 +1,39 @@
 package src.account;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-@Table(name = "accountDetails")
+@Table(name = "ACCOUNT_DETAILS")
 @Entity
 @NoArgsConstructor
 public class AccountDetails implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private int accountId;
+    private int id;
 
     @Column
     private String name;
 
     @Column
-    private int balance;
+    private BigDecimal balance;
 
-    public AccountDetails(String name, int balance) {
+    public AccountDetails(String name, BigDecimal balance) {
         this.name = name;
         this.balance = balance;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -38,11 +44,11 @@ public class AccountDetails implements Serializable {
         this.name = name;
     }
 
-    public int getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }

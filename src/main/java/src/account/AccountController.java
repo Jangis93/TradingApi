@@ -1,37 +1,36 @@
 package src.account;
 
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/account")
+@Slf4j
+@AllArgsConstructor
 public class AccountController {
-
-    Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @NonNull
     private AccountService accountService;
 
-    @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
     @PostMapping("/create")
-    public int crateAccount(@RequestParam String name, @RequestParam int balance) {
-        logger.info(String.format("Received request to create new account with name %s and balance %d", name, balance));
-        return this.accountService.createAccount(name, balance);
+    public ResponseEntity<AccountDetails> crateAccount(@RequestParam String name, @RequestParam BigDecimal balance) {
+        log.info(String.format("Received request to create new account with name %s and balance %f", name, balance));
+        return ResponseEntity.ok(this.accountService.createAccount(name, balance));
     }
 
     @GetMapping("/{accountId}")
-    public Optional<AccountDetails> fetchAccountDetails(@PathVariable int accountId) {
-        logger.info(String.format("Fetching account details with accountId: %d", accountId));
-        return accountService.fetchAccountDetails(accountId);
+    public ResponseEntity<AccountDetails> fetchAccountDetails(@PathVariable int accountId) {
+        log.info(String.format("Fetching account details with accountId: %d", accountId));
+        AccountDetails accountDetails = this.accountService.fetchAccountDetails(accountId).orElse(null);
+        if(accountDetails != null) {
+            return ResponseEntity.ok(accountDetails);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

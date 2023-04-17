@@ -10,9 +10,9 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<OrderDetails, Integer> {
 
     @Query(value = "FROM OrderDetails od WHERE od.status = ?1")
-    List<OrderDetails> findNonProcessedOrders(String orderStatus);
+    List<OrderDetails> fetchOrdersByStatus(OrderStatus orderStatus);
 
-    @Query(value="UPDATE OrderDetails od SET status = ?1 WHERE orderId = ?2")
-    boolean updateStatus(OrderStatus orderStatus, int orderId);
+    @Query(value="UPDATE OrderDetails od SET od.status = ?1 WHERE od.orderId = ?2")
+    void updateStatus(OrderStatus orderStatus, int orderId);
 
 }
