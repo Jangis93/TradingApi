@@ -27,7 +27,7 @@ H2 was used as an embedded database for this project.
 
 ## How to build
 The program can be built with maven: 
-* `mvn clean install` (without tests)
+* `mvn clean install` 
 
 ## How to run
 The program can be run with maven:  
