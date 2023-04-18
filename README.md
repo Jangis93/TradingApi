@@ -31,4 +31,4 @@ The program can be built with maven:
 
 ## How to run
 The program can be run with maven:  
-`mvn org.springframework.boot:spring-boot-maven-plugin:run
+`mvn org.springframework.boot:spring-boot-maven-plugin:run` 
